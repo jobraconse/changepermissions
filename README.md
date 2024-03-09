@@ -21,3 +21,5 @@ How to use ?
 6. run the command:` ./main.py`
 
 Enjoy :)
+
+![image](screenshot.png)
