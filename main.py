@@ -1,7 +1,7 @@
 import sys
 import form
 import os
-from PyQt5.QtWidgets import QApplication, QMainWindow, QDesktopWidget, QFileDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDesktopWidget, QFileDialog, QCheckBox
 
 
 class Window(QMainWindow, form.Ui_MainWindow):
@@ -12,12 +12,19 @@ class Window(QMainWindow, form.Ui_MainWindow):
         self.center()
         self.btnScanDir.clicked.connect(self.openDirectory)
         self.btnChangePermissions.clicked.connect(self.setPermissions)
+        self.checkBoxSudo.toggled.connect(self.onClicked)
         self.dir_mode = ""
         self.file_mode = ""
         self.startpath = ""
         self.needSudo = False
         
-        
+
+    def onClicked(self):
+        if self.checkBoxSudo.isChecked():
+            self.needSudo = True
+        else:
+            self.needSudo = False
+
     def list_files_and_directories(self):
         for root, dirs, files in os.walk(self.startpath, topdown=False):
             for name in files:
@@ -40,8 +47,6 @@ class Window(QMainWindow, form.Ui_MainWindow):
     def setPermissions(self):
         self.dir_mode = self.lineEditDirPermissions.text()
         self.file_mode = self.lineEditFilePermissions.text()
-        if self.checkBoxSudo.checked():
-            self.needSudo = True
         self.list_files_and_directories()
 
     def openDirectory(self):
