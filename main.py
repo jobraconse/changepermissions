@@ -52,7 +52,8 @@ class Window(QMainWindow, form.Ui_MainWindow):
     def openDirectory(self):
         file = QFileDialog.getExistingDirectory(self, "Select Directory")
         self.lineEdit.setText(file)
-        self.startpath = file
+        self.startpath = file.replace(" ", "\ ")
+        #print(self.startpath)
 
     def center(self):
         qr = self.frameGeometry()
